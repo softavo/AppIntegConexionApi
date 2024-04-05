@@ -15,7 +15,7 @@ namespace AppIntegConexionApi.Controllers
         }
 
         // GET: api/<UsuariosController>
-        [HttpGet("UsuarioClave")]
+        [HttpPost("UsuarioClave")]
         public Usuario UsuarioClave([FromBody] Usuario usuario)
         {
             var usuarioEmpresa = _usuariosRepository.ConsultarUsuarioPorUsuarioClave(usuario);
