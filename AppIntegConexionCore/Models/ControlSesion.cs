@@ -7,5 +7,6 @@ namespace AppIntegConexionCore.Models
         public string Usuario { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaExpiracion { get; set; }
+        public int Diferencia { get; set; }
     }
 }

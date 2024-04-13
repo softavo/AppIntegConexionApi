@@ -48,6 +48,7 @@ namespace AppIntegConexionCore.Repository
                 sesion.Usuario = dataReader.ToString("Usuario");
                 sesion.FechaInicio = dataReader.ToDateTime("FechaInicio");
                 sesion.FechaExpiracion = dataReader.ToNullableDateTime("FechaExpiracion");
+                sesion.Diferencia = dataReader.ToInt("Diferencia");
             }
             return sesion;
         }
