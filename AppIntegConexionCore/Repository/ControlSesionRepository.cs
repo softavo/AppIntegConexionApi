@@ -28,15 +28,17 @@ namespace AppIntegConexionCore.Repository
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", controlSesion.Usuario);
             cmd.Parameters.AddWithValue("@FechaExpiracion", controlSesion.FechaExpiracion);
+            cmd.Parameters.AddWithValue("@IdConexion", controlSesion.IdConexion);
             cmd.ExecuteNonQuery();
         }
 
 
-        public ControlSesion ConsultarSesion(string usuario)
+        public ControlSesion ConsultarSesion(string usuario, int idConexion)
         {
             SqlCommand cmd = new SqlCommand("ControlSesionesQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario);
+            cmd.Parameters.AddWithValue("@IdConexion", idConexion);
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             ControlSesion sesion = null;
@@ -49,6 +51,7 @@ namespace AppIntegConexionCore.Repository
                 sesion.FechaInicio = dataReader.ToDateTime("FechaInicio");
                 sesion.FechaExpiracion = dataReader.ToNullableDateTime("FechaExpiracion");
                 sesion.Diferencia = dataReader.ToInt("Diferencia");
+                sesion.IdConexion = dataReader.ToInt("IdConexion");
             }
             return sesion;
         }
@@ -59,14 +62,16 @@ namespace AppIntegConexionCore.Repository
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", controlSesion.Usuario);
             cmd.Parameters.AddWithValue("@FechaInicio", controlSesion.FechaInicio);
+            cmd.Parameters.AddWithValue("@IdConexion", controlSesion.IdConexion);
             cmd.ExecuteNonQuery();
         }
 
-        public void EliminarSesion(string usuario)
+        public void EliminarSesion(string usuario, int idConexion)
         {
             SqlCommand cmd = new SqlCommand("ControlSesionesDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario);
+            cmd.Parameters.AddWithValue("@IdConexion", idConexion);
 
             cmd.ExecuteNonQuery();
         }

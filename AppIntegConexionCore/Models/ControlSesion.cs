@@ -8,5 +8,6 @@ namespace AppIntegConexionCore.Models
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaExpiracion { get; set; }
         public int Diferencia { get; set; }
+        public int IdConexion { get; set; }
     }
 }

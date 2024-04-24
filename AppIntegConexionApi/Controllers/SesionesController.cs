@@ -16,10 +16,10 @@ namespace AppIntegConexionApi.Controllers
         }
 
         // GET: api/<SesionesController>
-        [HttpGet("SesionConsultar/{usuario}")]
-        public ControlSesion SesionConsultar(string usuario)
+        [HttpGet("SesionConsultar/{usuario}/{idConexion}")]
+        public ControlSesion SesionConsultar(string usuario, int idConexion)
         {
-            var sesion = _controlSesionRepository.ConsultarSesion(usuario);
+            var sesion = _controlSesionRepository.ConsultarSesion(usuario, idConexion);
             return sesion;
         }
 
@@ -40,10 +40,10 @@ namespace AppIntegConexionApi.Controllers
         }
 
         // DELETE api/<SesionesController>/5
-        [HttpDelete("SesionEliminar/{usuario}")]
-        public IActionResult SesionEliminar(string usuario)
+        [HttpDelete("SesionEliminar/{usuario}/{idConexion}")]
+        public IActionResult SesionEliminar(string usuario, int idConexion)
         {
-            _controlSesionRepository.EliminarSesion(usuario);
+            _controlSesionRepository.EliminarSesion(usuario, idConexion);
             return Ok();
         }
     }
