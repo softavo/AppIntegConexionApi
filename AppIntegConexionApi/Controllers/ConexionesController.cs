@@ -33,11 +33,19 @@ namespace AppIntegConexionApi.Controllers
             return conexionEmpresa;
         }
 
-        // POST api/<ConexionController>
+        // POST api/<ConexionesController>
         [HttpPost("EmpresaCrear")]
         public IActionResult EmpresaCrear([FromBody] Conexion empresa)
         {
             _conexionesRepository.CrearEmpresa(empresa);
+            return Ok();
+        }
+
+        // PUT api/<ConexionesController>/5
+        [HttpPut("EmpresaActualizar")]
+        public IActionResult UsuarioActualizar([FromBody] Conexion empresa)
+        {
+            _conexionesRepository.ActualizarEmpresa(empresa);
             return Ok();
         }
     }

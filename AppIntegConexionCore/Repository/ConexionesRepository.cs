@@ -23,6 +23,36 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
+        public void ActualizarEmpresa(Conexion empresa)
+        {
+            SqlCommand cmd = new SqlCommand("ConexionesUpd", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdConexion", empresa.IdConexion);
+            cmd.Parameters.AddWithValue("@NombreCompania", empresa.NombreCompania);
+            cmd.Parameters.AddWithValue("@StringConnection", empresa.StringConnection);
+            cmd.Parameters.AddWithValue("@ServerName", empresa.ServerName);
+            cmd.Parameters.AddWithValue("@DbName", empresa.DbName);
+            cmd.Parameters.AddWithValue("@UserName", empresa.UserName);
+            cmd.Parameters.AddWithValue("@Password", empresa.Password);
+            cmd.Parameters.AddWithValue("@Nit", empresa.Nit);
+            cmd.Parameters.AddWithValue("@DV", empresa.DV);
+            cmd.Parameters.AddWithValue("@RepLegal", empresa.RepLegal);
+            cmd.Parameters.AddWithValue("@Telefono", empresa.Telefono);
+            cmd.Parameters.AddWithValue("@Correo", empresa.Correo);
+            cmd.Parameters.AddWithValue("@Pais", empresa.Pais);
+            cmd.Parameters.AddWithValue("@Departamento", empresa.Departamento);
+            cmd.Parameters.AddWithValue("@Municipio", empresa.Municipio);
+            cmd.Parameters.AddWithValue("@Barrio", empresa.Barrio);
+            cmd.Parameters.AddWithValue("@Direccion", empresa.Direccion);
+            cmd.Parameters.AddWithValue("@TextoResolucion", empresa.TextoResolucion);
+            cmd.Parameters.AddWithValue("@Resolucion", empresa.Resolucion);
+            cmd.Parameters.AddWithValue("@IvaIncluido", empresa.IvaIncluido);
+            cmd.Parameters.AddWithValue("@FacturaSinInventario", empresa.FacturaSinInventario);
+            cmd.Parameters.AddWithValue("@ImprimirPos", empresa.ImprimirPos);
+            cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
+            cmd.ExecuteNonQuery();
+        }
+
         public List<Conexion> ConsultarConexionPorUsuario(string codigo)
         {
             SqlCommand cmd = new SqlCommand("ConexionesPorCodigoQry", conexionDb);
@@ -39,27 +69,6 @@ namespace AppIntegConexionCore.Repository
                 conexion.IdConexion = dataReader.ToInt("IdConexion");
                 conexion.NombreCompania = dataReader.ToString("NombreCompania");
                 conexion.StringConnection = dataReader.ToString("StringConnection");
-                conexion.ServerName = dataReader.ToString("ServerName");
-                conexion.DbName = dataReader.ToString("DbName");
-                conexion.UserName = dataReader.ToString("UserName");
-                conexion.Password = dataReader.ToString("Password");
-                conexion.Nit = dataReader.ToString("Nit");
-                conexion.DV = dataReader.ToInt("DV");
-                conexion.Nit = dataReader.ToString("Nit");
-                conexion.RepLegal = dataReader.ToString("RepLegal");
-                conexion.Telefono = dataReader.ToString("Telefono");
-                conexion.Correo = dataReader.ToString("Correo");
-                conexion.Pais = dataReader.ToString("Pais");
-                conexion.Departamento = dataReader.ToString("Departamento");
-                conexion.Municipio = dataReader.ToString("Municipio");
-                conexion.Direccion = dataReader.ToString("Direccion");
-                conexion.Barrio = dataReader.ToString("Barrio");
-                conexion.TextoResolucion = dataReader.ToString("TextoResolucion");
-                conexion.Resolucion = dataReader.ToString("Resolucion");
-                conexion.IvaIncluido = dataReader.ToBool("IvaIncluido");
-                conexion.FacturaSinInventario = dataReader.ToBool("FacturaSinInventario");
-                conexion.ImprimirPos = dataReader.ToBool("ImprimirPos");
-                conexion.Completo = dataReader.ToBool("Completo");
                 listaEmpresas.Add(conexion);
             }
             return listaEmpresas;

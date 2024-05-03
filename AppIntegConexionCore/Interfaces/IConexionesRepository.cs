@@ -8,6 +8,7 @@ namespace AppIntegConexionCore.Interfaces
         List<Conexion> ConsultarConexionPorUsuario(string usuario);
         Conexion ConsultarConexionPorUsuarioEmpresa(string usuario, int conexion);
         void CrearEmpresa(Conexion empresa);
+        void ActualizarEmpresa(Conexion empresa);
     }
 }
     
