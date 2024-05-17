@@ -1,8 +1,8 @@
 ﻿using AppIntegConexionCore.Interfaces;
 using AppIntegConexionCore.Models;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace AppIntegConexionCore.Repository
 {
@@ -10,13 +10,13 @@ namespace AppIntegConexionCore.Repository
     {
         private readonly IConfiguration configuration;
         private readonly string connectionString;
-        private readonly SqlConnection conexionDb;
+        private readonly MySqlConnection conexionDb;
 
         public UsuariosRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
             connectionString = configuration.GetConnectionString("ConnectionEmpresas");
-            conexionDb = new SqlConnection(connectionString);
+            conexionDb = new MySqlConnection(connectionString);
             if (conexionDb.State == 0)
             {
                 conexionDb.Open();
@@ -25,11 +25,11 @@ namespace AppIntegConexionCore.Repository
 
         public Usuario ConsultarUsuarioPorUsuarioClave(Usuario usuarioApi)
         {
-            SqlCommand cmd = new SqlCommand("UsuariosPorUsuarioClaveQry", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("UsuariosPorUsuarioClaveQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Codigo", usuarioApi.Codigo);
             cmd.Parameters.AddWithValue("@Clave", usuarioApi.Clave);
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            MySqlDataReader dataReader = cmd.ExecuteReader();
 
             Usuario usuario = null;
 
@@ -46,7 +46,7 @@ namespace AppIntegConexionCore.Repository
 
         public void CrearUsuario(Usuario usuario)
         {
-            SqlCommand cmd = new SqlCommand("UsuariosIns", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("UsuariosIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
             cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
@@ -56,7 +56,7 @@ namespace AppIntegConexionCore.Repository
 
         public void ActualizarUsuario(Usuario usuario)
         {
-            SqlCommand cmd = new SqlCommand("UsuariosUpd", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("UsuariosUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
             cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
@@ -66,7 +66,7 @@ namespace AppIntegConexionCore.Repository
 
         public void EliminarUsuario(string usuario)
         {
-            SqlCommand cmd = new SqlCommand("UsuariosDel", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("UsuariosDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario);
             cmd.ExecuteNonQuery();
@@ -74,7 +74,7 @@ namespace AppIntegConexionCore.Repository
 
         public void EliminarUsuarioEmpresa(string codigo, int idConexion)
         {
-            SqlCommand cmd = new SqlCommand("UsuariosConexionDel", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("UsuariosConexionDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", codigo);
             cmd.Parameters.AddWithValue("@IdConexion", idConexion);

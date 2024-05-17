@@ -1,5 +1,4 @@
-﻿using System.Data.SqlClient;
-using System;
+﻿using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace AppIntegConexionCore.Repository
@@ -420,7 +419,7 @@ namespace AppIntegConexionCore.Repository
 
                 if (!reader.IsDBNull(index))
                 {
-                    resultado = ((SqlDataReader)reader).GetTimeSpan(index);
+                    resultado = ((MySqlDataReader)reader).GetTimeSpan(index);
                 }
             }
 

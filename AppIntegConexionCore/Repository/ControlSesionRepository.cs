@@ -1,7 +1,7 @@
 ﻿using AppIntegConexionCore.Interfaces;
 using AppIntegConexionCore.Models;
 using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace AppIntegConexionCore.Repository
@@ -10,13 +10,13 @@ namespace AppIntegConexionCore.Repository
     {
         private readonly IConfiguration configuration;
         private readonly string connectionString;
-        private readonly SqlConnection conexionDb;
+        private readonly MySqlConnection conexionDb;
 
         public ControlSesionRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
             connectionString = configuration.GetConnectionString("ConnectionEmpresas");
-            conexionDb = new SqlConnection(connectionString);
+            conexionDb = new MySqlConnection(connectionString);
             if (conexionDb.State == 0)
             {
                 conexionDb.Open();
@@ -24,7 +24,7 @@ namespace AppIntegConexionCore.Repository
         }
         public void ActualizarSesion(ControlSesion controlSesion)
         {
-            SqlCommand cmd = new SqlCommand("ControlSesionesUpd", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ControlSesionesUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", controlSesion.Usuario);
             cmd.Parameters.AddWithValue("@FechaExpiracion", controlSesion.FechaExpiracion);
@@ -35,11 +35,11 @@ namespace AppIntegConexionCore.Repository
 
         public ControlSesion ConsultarSesion(string usuario, int idConexion)
         {
-            SqlCommand cmd = new SqlCommand("ControlSesionesQry", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ControlSesionesQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario);
             cmd.Parameters.AddWithValue("@IdConexion", idConexion);
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            MySqlDataReader dataReader = cmd.ExecuteReader();
 
             ControlSesion sesion = null;
 
@@ -58,7 +58,7 @@ namespace AppIntegConexionCore.Repository
 
         public void CrearSesion(ControlSesion controlSesion)
         {
-            SqlCommand cmd = new SqlCommand("ControlSesionesIns", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ControlSesionesIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", controlSesion.Usuario);
             cmd.Parameters.AddWithValue("@FechaInicio", controlSesion.FechaInicio);
@@ -68,7 +68,7 @@ namespace AppIntegConexionCore.Repository
 
         public void EliminarSesion(string usuario, int idConexion)
         {
-            SqlCommand cmd = new SqlCommand("ControlSesionesDel", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ControlSesionesDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario);
             cmd.Parameters.AddWithValue("@IdConexion", idConexion);

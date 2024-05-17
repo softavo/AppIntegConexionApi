@@ -1,8 +1,8 @@
 ﻿using AppIntegConexionCore.Interfaces;
 using AppIntegConexionCore.Models;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace AppIntegConexionCore.Repository
 {
@@ -10,13 +10,12 @@ namespace AppIntegConexionCore.Repository
     {
         private readonly IConfiguration configuration;
         private readonly string connectionString;
-        private readonly SqlConnection conexionDb;
-
+        private readonly MySqlConnection conexionDb;
         public ConexionesRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
             connectionString = configuration.GetConnectionString("ConnectionEmpresas");
-            conexionDb = new SqlConnection(connectionString);
+            conexionDb = new MySqlConnection(connectionString);
             if (conexionDb.State == 0)
             {
                 conexionDb.Open();
@@ -25,7 +24,7 @@ namespace AppIntegConexionCore.Repository
 
         public void ActualizarEmpresa(Conexion empresa)
         {
-            SqlCommand cmd = new SqlCommand("ConexionesUpd", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ConexionesUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdConexion", empresa.IdConexion);
             cmd.Parameters.AddWithValue("@NombreCompania", empresa.NombreCompania);
@@ -50,15 +49,17 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@FacturaSinInventario", empresa.FacturaSinInventario);
             cmd.Parameters.AddWithValue("@ImprimirPos", empresa.ImprimirPos);
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
+            cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
+            cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
             cmd.ExecuteNonQuery();
         }
 
         public List<Conexion> ConsultarConexionPorUsuario(string codigo)
         {
-            SqlCommand cmd = new SqlCommand("ConexionesPorCodigoQry", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ConexionesPorCodigoQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Codigo", codigo);
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            MySqlDataReader dataReader = cmd.ExecuteReader();
             List<Conexion> listaEmpresas = new List<Conexion>();
             Conexion conexion = null;
 
@@ -76,11 +77,11 @@ namespace AppIntegConexionCore.Repository
 
         public Conexion ConsultarConexionPorUsuarioEmpresa(string codigo, int idConexion)
         {
-            SqlCommand cmd = new SqlCommand("ConexionesPorCodigoEmpresaQry", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ConexionesPorCodigoEmpresaQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Codigo", codigo);
             cmd.Parameters.AddWithValue("@IdConexion", idConexion);
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            MySqlDataReader dataReader = cmd.ExecuteReader();
             Conexion conexion = null;
 
             if (dataReader.Read())
@@ -111,6 +112,8 @@ namespace AppIntegConexionCore.Repository
                 conexion.FacturaSinInventario = dataReader.ToBool("FacturaSinInventario");
                 conexion.ImprimirPos = dataReader.ToBool("ImprimirPos");
                 conexion.Completo = dataReader.ToBool("Completo");
+                conexion.MinutosExpiraSesion = dataReader.ToInt("MinutosExpiraSesion");
+                conexion.CantidadUsuarios = dataReader.ToInt("CantidadUsuarios");
             }
 
             return conexion;
@@ -118,7 +121,7 @@ namespace AppIntegConexionCore.Repository
 
         public void CrearEmpresa(Conexion empresa)
         {
-            SqlCommand cmd = new SqlCommand("ConexionesIns", conexionDb);
+            MySqlCommand cmd = new MySqlCommand("ConexionesIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@NombreCompania", empresa.NombreCompania);
             cmd.Parameters.AddWithValue("@StringConnection", empresa.StringConnection);
@@ -142,6 +145,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@FacturaSinInventario", empresa.FacturaSinInventario);
             cmd.Parameters.AddWithValue("@ImprimirPos", empresa.ImprimirPos);
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
+            cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
+            cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
             cmd.ExecuteNonQuery();
         }
 
