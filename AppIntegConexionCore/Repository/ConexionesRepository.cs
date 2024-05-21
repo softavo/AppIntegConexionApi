@@ -50,6 +50,9 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@FacturaSinInventario", empresa.FacturaSinInventario);
             cmd.Parameters.AddWithValue("@ImprimirPos", empresa.ImprimirPos);
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
+            cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
+            cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
+            cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.ExecuteNonQuery();
         }
 
@@ -111,6 +114,9 @@ namespace AppIntegConexionCore.Repository
                 conexion.FacturaSinInventario = dataReader.ToBool("FacturaSinInventario");
                 conexion.ImprimirPos = dataReader.ToBool("ImprimirPos");
                 conexion.Completo = dataReader.ToBool("Completo");
+                conexion.MinutosExpiraSesion = dataReader.ToInt("MinutosExpiraSesion");
+                conexion.CantidadUsuarios = dataReader.ToInt("CantidadUsuarios");
+                conexion.MensajeGeneral = dataReader.ToString("MensajeGeneral");
             }
 
             return conexion;
@@ -142,6 +148,9 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@FacturaSinInventario", empresa.FacturaSinInventario);
             cmd.Parameters.AddWithValue("@ImprimirPos", empresa.ImprimirPos);
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
+            cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
+            cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
+            cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.ExecuteNonQuery();
         }
 

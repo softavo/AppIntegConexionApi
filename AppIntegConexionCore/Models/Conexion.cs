@@ -25,5 +25,8 @@
         public bool FacturaSinInventario { get; set; }
         public bool ImprimirPos { get; set; }
         public bool Completo { get; set; }
+        public int MinutosExpiraSesion { get; set; }
+        public int CantidadUsuarios { get; set; }
+        public string MensajeGeneral { get; set; }
     }
 }
