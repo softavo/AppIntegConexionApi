@@ -1,6 +1,5 @@
 ﻿using AppIntegConexionCore.Interfaces;
 using AppIntegConexionCore.Models;
-using AppIntegConexionCore.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 

@@ -52,6 +52,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
             cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
             cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
+            cmd.Parameters.AddWithValue("@ModificaPrecio", empresa.ModificaPrecio);
+            cmd.Parameters.AddWithValue("@DiferenciaHoraria", empresa.DiferenciaHoraria);
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.ExecuteNonQuery();
         }
@@ -116,6 +118,8 @@ namespace AppIntegConexionCore.Repository
                 conexion.Completo = dataReader.ToBool("Completo");
                 conexion.MinutosExpiraSesion = dataReader.ToInt("MinutosExpiraSesion");
                 conexion.CantidadUsuarios = dataReader.ToInt("CantidadUsuarios");
+                conexion.ModificaPrecio = dataReader.ToBool("ModificaPrecio");
+                conexion.DiferenciaHoraria = dataReader.ToInt("DiferenciaHoraria");
                 conexion.MensajeGeneral = dataReader.ToString("MensajeGeneral");
             }
 
@@ -150,6 +154,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@Completo", empresa.Completo);
             cmd.Parameters.AddWithValue("@MinutosExpiraSesion", empresa.MinutosExpiraSesion);
             cmd.Parameters.AddWithValue("@CantidadUsuarios", empresa.CantidadUsuarios);
+            cmd.Parameters.AddWithValue("@ModificaPrecio", empresa.ModificaPrecio);
+            cmd.Parameters.AddWithValue("@DiferenciaHoraria", empresa.DiferenciaHoraria);
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.ExecuteNonQuery();
         }

@@ -27,6 +27,8 @@
         public bool Completo { get; set; }
         public int MinutosExpiraSesion { get; set; }
         public int CantidadUsuarios { get; set; }
+        public bool ModificaPrecio { get; set; }
+        public int DiferenciaHoraria { get; set; }
         public string MensajeGeneral { get; set; }
     }
 }
