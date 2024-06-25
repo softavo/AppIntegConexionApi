@@ -55,6 +55,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@ModificaPrecio", empresa.ModificaPrecio);
             cmd.Parameters.AddWithValue("@DiferenciaHoraria", empresa.DiferenciaHoraria);
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
+            cmd.Parameters.AddWithValue("@ImprimirAgrupado", empresa.ImprimirAgrupado);
+            cmd.Parameters.AddWithValue("@EnviaFacturaCorreo", empresa.EnviaFacturaCorreo);
             cmd.ExecuteNonQuery();
         }
 
@@ -121,6 +123,8 @@ namespace AppIntegConexionCore.Repository
                 conexion.ModificaPrecio = dataReader.ToBool("ModificaPrecio");
                 conexion.DiferenciaHoraria = dataReader.ToInt("DiferenciaHoraria");
                 conexion.MensajeGeneral = dataReader.ToString("MensajeGeneral");
+                conexion.ImprimirAgrupado = dataReader.ToBool("ImprimirAgrupado");
+                conexion.EnviaFacturaCorreo = dataReader.ToBool("EnviaFacturaCorreo");
             }
 
             return conexion;
@@ -157,6 +161,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@ModificaPrecio", empresa.ModificaPrecio);
             cmd.Parameters.AddWithValue("@DiferenciaHoraria", empresa.DiferenciaHoraria);
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
+            cmd.Parameters.AddWithValue("@ImprimirAgrupado", empresa.ImprimirAgrupado);
+            cmd.Parameters.AddWithValue("@EnviaFacturaCorreo", empresa.EnviaFacturaCorreo);
             cmd.ExecuteNonQuery();
         }
 

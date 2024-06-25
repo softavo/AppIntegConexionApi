@@ -30,5 +30,7 @@
         public bool ModificaPrecio { get; set; }
         public int DiferenciaHoraria { get; set; }
         public string MensajeGeneral { get; set; }
+        public bool ImprimirAgrupado { get; set; }
+        public bool EnviaFacturaCorreo { get; set; }
     }
 }
