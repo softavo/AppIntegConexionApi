@@ -57,6 +57,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.Parameters.AddWithValue("@ImprimirAgrupado", empresa.ImprimirAgrupado);
             cmd.Parameters.AddWithValue("@EnviaFacturaCorreo", empresa.EnviaFacturaCorreo);
+            cmd.Parameters.AddWithValue("@Manifiestos", empresa.Manifiestos);
+            cmd.Parameters.AddWithValue("@Pedidos", empresa.Pedidos);
             cmd.ExecuteNonQuery();
         }
 
@@ -125,6 +127,8 @@ namespace AppIntegConexionCore.Repository
                 conexion.MensajeGeneral = dataReader.ToString("MensajeGeneral");
                 conexion.ImprimirAgrupado = dataReader.ToBool("ImprimirAgrupado");
                 conexion.EnviaFacturaCorreo = dataReader.ToBool("EnviaFacturaCorreo");
+                conexion.Manifiestos = dataReader.ToBool("Manifiestos");
+                conexion.Pedidos = dataReader.ToBool("Pedidos");
             }
 
             return conexion;
@@ -163,6 +167,8 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@MensajeGeneral", empresa.MensajeGeneral);
             cmd.Parameters.AddWithValue("@ImprimirAgrupado", empresa.ImprimirAgrupado);
             cmd.Parameters.AddWithValue("@EnviaFacturaCorreo", empresa.EnviaFacturaCorreo);
+            cmd.Parameters.AddWithValue("@Manifiestos", empresa.Manifiestos);
+            cmd.Parameters.AddWithValue("@Pedidos", empresa.Pedidos);
             cmd.ExecuteNonQuery();
         }
 

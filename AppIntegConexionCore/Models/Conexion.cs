@@ -32,5 +32,7 @@
         public string MensajeGeneral { get; set; }
         public bool ImprimirAgrupado { get; set; }
         public bool EnviaFacturaCorreo { get; set; }
+        public bool Pedidos { get; set; }
+        public bool Manifiestos { get; set; }
     }
 }
