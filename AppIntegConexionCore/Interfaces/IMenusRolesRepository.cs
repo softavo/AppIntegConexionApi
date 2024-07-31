@@ -7,8 +7,8 @@ namespace AppIntegConexionCore.Interfaces
         List<MenuRol> Consultar();
         MenuRol ConsultarPorId(int? id);
         List<MenuRol> ConsultarMenusRol(int idRol);
-        Task Crear(MenuRol menusRol);
-        Task<bool> Editar(MenuRol menusRol);
-        Task<bool> Eliminar(int id);
+        void Crear(MenuRol menusRol);
+        void Editar(MenuRol menusRol);
+        void Eliminar(int id);
     }
 }

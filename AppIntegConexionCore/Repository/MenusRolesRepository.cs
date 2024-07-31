@@ -1,13 +1,8 @@
-﻿using AppIntegConexionCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppIntegConexionCore.Interfaces;
+using AppIntegConexionCore.Models;
 using Microsoft.Extensions.Configuration;
-using AppIntegConexionCore.Interfaces;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace AppIntegConexionCore.Repository
 {
@@ -48,10 +43,8 @@ namespace AppIntegConexionCore.Repository
                 menusRol.MenuPadre = dataReader.ToString("MenuPadre");
                 menusRol.MenuHijo = dataReader.ToString("MenuHijo");
                 menusRol.Rol = dataReader.ToString("Rol");
-
                 listaMenusRol.Add(menusRol);
             }
-
             return listaMenusRol;
         }
 
@@ -76,44 +69,35 @@ namespace AppIntegConexionCore.Repository
                 menusRol.MenuHijo = dataReader.ToString("MenuHijo");
                 menusRol.Rol = dataReader.ToString("Rol");
             }
-
             return menusRol;
         }
 
-        public async Task Crear(MenuRol menusRol)
+        public void Crear(MenuRol menusRol)
         {
             SqlCommand cmd = new SqlCommand("MenusRolesIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@IdRol", menusRol.IdRol);
             cmd.Parameters.AddWithValue("@IdMenuPadre", menusRol.IdMenuPadre);
             cmd.Parameters.AddWithValue("@IdMenuHijo", menusRol.IdMenuHijo);
-
-            await cmd.ExecuteNonQueryAsync();
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Editar(MenuRol menusRol)
+        public void Editar(MenuRol menusRol)
         {
             SqlCommand cmd = new SqlCommand("RolesMenusUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdRol", menusRol.IdRol);
             cmd.Parameters.AddWithValue("@IdMenuPadre", menusRol.IdMenuPadre);
             cmd.Parameters.AddWithValue("@IdMenuHijo", menusRol.IdMenuHijo);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Eliminar(int id)
+        public void Eliminar(int id)
         {
             SqlCommand cmd = new SqlCommand("MenusRolesDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdMenuRol", id);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
         public List<MenuRol> ConsultarMenusRol(int idRol)
@@ -136,7 +120,6 @@ namespace AppIntegConexionCore.Repository
 
                 listaMenusRol.Add(menusRol);
             }
-
             return listaMenusRol;
         }
 

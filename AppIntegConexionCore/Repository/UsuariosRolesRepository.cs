@@ -44,7 +44,6 @@ namespace AppIntegConexionCore.Repository
 
                 listaUsuariosRol.Add(usuariosRol);
             }
-
             return listaUsuariosRol;
         }
 
@@ -67,7 +66,6 @@ namespace AppIntegConexionCore.Repository
                 usuariosRol.Usuario = dataReader.ToString("Usuario");
                 usuariosRol.Rol = dataReader.ToString("Rol");
             }
-
             return usuariosRol;
         }
 
@@ -94,7 +92,6 @@ namespace AppIntegConexionCore.Repository
                 usuariosRol.SysEmp = dataReader.ToBool("SysEmp");
                 listaUsuariosRol.Add(usuariosRol);
             }
-
             return listaUsuariosRol;
         }
 
@@ -119,37 +116,30 @@ namespace AppIntegConexionCore.Repository
             return listaUsuariosRol;
         }
 
-        public async Task Crear(UsuarioRol usuarioRol)
+        public void Crear(UsuarioRol usuarioRol)
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolesIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@IdUsuario", usuarioRol.IdUsuario);
             cmd.Parameters.AddWithValue("@IdRol", usuarioRol.IdRol);
-
-            await cmd.ExecuteNonQueryAsync();
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Editar(UsuarioRol usuarioRol)
+        public void Editar(UsuarioRol usuarioRol)
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolesUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdUsuario", usuarioRol.IdUsuario);
             cmd.Parameters.AddWithValue("@IdRol", usuarioRol.IdRol);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<int> Eliminar(int id)
+        public void Eliminar(int id)
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolesDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdUsuarioRol", id);
-
-            int idUsuario = await cmd.ExecuteNonQueryAsync();
-
-            return idUsuario;
+            cmd.ExecuteNonQuery();
         }
 
         public void Dispose()

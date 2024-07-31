@@ -8,8 +8,8 @@ namespace AppIntegConexionCore.Interfaces
         UsuarioRol ConsultarPorId(int? id);
         IList<UsuarioRol> Consultar();
         IList<UsuarioRol> Buscar(int idRol);
-        Task Crear(UsuarioRol usuarioRol);
-        Task<bool> Editar(UsuarioRol usuarioRol);
-        Task<int> Eliminar(int id);
+        void Crear(UsuarioRol usuarioRol);
+        void Editar(UsuarioRol usuarioRol);
+        void Eliminar(int id);
     }
 }

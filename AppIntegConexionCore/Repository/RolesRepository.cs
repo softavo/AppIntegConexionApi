@@ -110,17 +110,17 @@ namespace AppIntegConexionCore.Repository
 
             return listaRolesDisponibles;
         }
-        public async Task Crear(Rol rol)
+        public void Crear(Rol rol)
         {
             SqlCommand cmd = new SqlCommand("RolesIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Descripcion", rol.Descripcion);
             cmd.Parameters.AddWithValue("@SysAdmin", rol.SysAdmin);
             cmd.Parameters.AddWithValue("@SysEmp", rol.SysEmp);
-            await cmd.ExecuteNonQueryAsync();
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Editar(Rol rol)
+        public void Editar(Rol rol)
         {
             SqlCommand cmd = new SqlCommand("RolesUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -128,21 +128,15 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@Descripcion", rol.Descripcion);
             cmd.Parameters.AddWithValue("@SysAdmin", rol.SysAdmin);
             cmd.Parameters.AddWithValue("@SysEmp", rol.SysEmp);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Eliminar(int id)
+        public void Eliminar(int id)
         {
             SqlCommand cmd = new SqlCommand("RolesDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdRol", id);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
         public void Dispose()
