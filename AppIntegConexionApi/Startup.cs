@@ -19,11 +19,14 @@ namespace AppIntegConexionApi
             services.AddScoped<IConexionesRepository, ConexionesRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IMenusRepository, MenusRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IMenusRolesRepository, MenusRolesRepository>();
+            services.AddScoped<IUsuariosRolesRepository, UsuariosRolesRepository>();
             services.AddControllers();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Conexion", Version = "v1" });
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Seguridad", Version = "v1" });
             });
         }
 
@@ -41,7 +44,7 @@ namespace AppIntegConexionApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Conexion V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seguridad V1");
             });
 
             app.UseEndpoints(endpoints =>

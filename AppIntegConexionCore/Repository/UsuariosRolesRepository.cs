@@ -39,7 +39,7 @@ namespace AppIntegConexionCore.Repository
                 usuariosRol.IdUsuarioRol = dataReader.ToInt("IdUsuarioRol");
                 usuariosRol.IdUsuario = dataReader.ToInt("IdUsuario");
                 usuariosRol.IdRol = dataReader.ToInt("IdRol");
-                usuariosRol.Usuario = dataReader.ToString("Usuario");
+                //usuariosRol.Usuario = dataReader.ToString("Usuario");
                 usuariosRol.Rol = dataReader.ToString("Rol");
 
                 listaUsuariosRol.Add(usuariosRol);
