@@ -23,18 +23,18 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
-        public List<Menu> Consultar()
+        public List<MenuView> Consultar()
         {
             SqlCommand cmd = new SqlCommand("MenusQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<Menu> listaMenus = new List<Menu>();
-            Menu menu = null;
+            List<MenuView> listaMenus = new List<MenuView>();
+            MenuView menu = null;
 
             while (dataReader.Read())
             {
-                menu = new Menu();
+                menu = new MenuView();
 
                 menu.IdMenu = dataReader.ToInt("IdMenu");
                 menu.Descripcion = dataReader.ToString("Descripcion");
@@ -113,14 +113,14 @@ namespace AppIntegConexionCore.Repository
                 menu.IdMenuPadre = dataReader.ToInt("IdMenuPadre");
                 menu.Url = dataReader.ToString("Url");
                 menu.Orden = dataReader.ToInt("Orden");
-                menu.MenuPadre = dataReader.ToString("MenuPadre");
+                //menu.MenuPadre = dataReader.ToString("MenuPadre");
                 menu.VentanaNueva = dataReader.ToBool("VentanaNueva");
             }
 
             return menu;
         }
 
-        public List<Menu> ConsultarPorIdUsuario(int? id, bool completo)
+        public List<MenuView> ConsultarPorIdUsuario(int? id, bool completo)
         {
             SqlCommand cmd = new SqlCommand("MenusPorIdUsuarioQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -128,20 +128,20 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@Completo", completo);
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<Menu> objListaMenu = new List<Menu>();
+            List<MenuView> objListaMenu = new List<MenuView>();
 
-            List<Menu> listaMenus = new List<Menu>();
-            List<Menu> listaSubMenus = new List<Menu>();
+            List<MenuView> listaMenus = new List<MenuView>();
+            List<MenuView> listaSubMenus = new List<MenuView>();
 
-            Menu objMenu = null;
+            MenuView objMenu = null;
 
-            Menu menu = null;
-            Menu submenu = null;
+            MenuView menu = null;
+            MenuView submenu = null;
 
             while (dataReader.Read())
             {
-                menu = new Menu();
-                submenu = new Menu();
+                menu = new MenuView();
+                submenu = new MenuView();
 
                 if (dataReader.ToInt("IdMenuPadre") == 0)
                 {
@@ -168,7 +168,7 @@ namespace AppIntegConexionCore.Repository
 
             for (int intMenu = 0; intMenu < listaMenus.Count; intMenu++)
             {
-                objMenu = new Menu();
+                objMenu = new MenuView();
 
                 objMenu.IdMenu = listaMenus[intMenu].IdMenu;
                 objMenu.Descripcion = listaMenus[intMenu].Descripcion;
@@ -176,11 +176,11 @@ namespace AppIntegConexionCore.Repository
                 objMenu.Url = listaMenus[intMenu].Url;
                 objMenu.VentanaNueva = listaMenus[intMenu].VentanaNueva;
 
-                Menu objSubMenu = null;
-                List<Menu> objListaSubMenu = new List<Menu>();
+                MenuView objSubMenu = null;
+                List<MenuView> objListaSubMenu = new List<MenuView>();
                 for (int intSubMenu = 0; intSubMenu < listaSubMenus.Count; intSubMenu++)
                 {
-                    objSubMenu = new Menu();
+                    objSubMenu = new MenuView();
 
                     if (listaSubMenus[intSubMenu].IdMenuPadre == listaMenus[intMenu].IdMenu)
                     {
@@ -200,22 +200,19 @@ namespace AppIntegConexionCore.Repository
 
             return objListaMenu;
         }
-        public async Task Crear(Menu menu)
+        public void Crear(Menu menu)
         {
             SqlCommand cmd = new SqlCommand("MenusIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@Descripcion", menu.Descripcion);
             cmd.Parameters.AddWithValue("@IdMenuPadre", menu.IdMenuPadre);
             cmd.Parameters.AddWithValue("@Url", menu.Url);
             cmd.Parameters.AddWithValue("@Orden", menu.Orden);
             cmd.Parameters.AddWithValue("@VentanaNueva", menu.VentanaNueva);
-
-            await cmd.ExecuteNonQueryAsync();
-
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Editar(Menu menu)
+        public void Editar(Menu menu)
         {
             SqlCommand cmd = new SqlCommand("MenusUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -225,21 +222,15 @@ namespace AppIntegConexionCore.Repository
             cmd.Parameters.AddWithValue("@Url", menu.Url);
             cmd.Parameters.AddWithValue("@Orden", menu.Orden);
             cmd.Parameters.AddWithValue("@VentanaNueva", menu.VentanaNueva);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
-        public async Task<bool> Eliminar(int id)
+        public void Eliminar(int id)
         {
             SqlCommand cmd = new SqlCommand("MenusDel", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdMenu", id);
-
-            int rows = await cmd.ExecuteNonQueryAsync();
-
-            return (rows > 0);
+            cmd.ExecuteNonQuery();
         }
 
         public void Dispose()

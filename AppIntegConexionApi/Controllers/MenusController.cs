@@ -16,14 +16,14 @@ namespace AppIntegConexionApi.Controllers
         }
 
         [HttpGet("MenusUsuario/{idUsuario}/{completo}")]
-        public IEnumerable<Menu> MenusUsuario(int idUsuario, bool completo)
+        public IEnumerable<MenuView> MenusUsuario(int idUsuario, bool completo)
         {
             var menus = _menusRepository.ConsultarPorIdUsuario(idUsuario, completo);
             return menus;
         }
 
         [HttpGet("MenusConsultar")]
-        public IEnumerable<Menu> MenusConsultar()
+        public IEnumerable<MenuView> MenusConsultar()
         {
             var menus = _menusRepository.Consultar();
             return menus;
