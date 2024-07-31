@@ -18,6 +18,7 @@ namespace AppIntegConexionApi
             services.AddScoped<IControlSesionRepository,ControlSesionRepository>();
             services.AddScoped<IConexionesRepository, ConexionesRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
+            services.AddScoped<IMenusRepository, MenusRepository>();
             services.AddControllers();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSwaggerGen(c =>
