@@ -6,13 +6,13 @@ using System.Data.SqlClient;
 
 namespace AppIntegConexionCore.Repository
 {
-    public class ConexionesRepository : IConexionesRepository, IDisposable
+    public class EmpresasRepository : IEmpresasRepository, IDisposable
     {
         private readonly IConfiguration configuration;
         private readonly string connectionString;
         private readonly SqlConnection conexionDb;
 
-        public ConexionesRepository(IConfiguration _configuration)
+        public EmpresasRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
             connectionString = configuration.GetConnectionString("ConnectionEmpresas");

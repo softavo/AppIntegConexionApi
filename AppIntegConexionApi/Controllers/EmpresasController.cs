@@ -7,11 +7,11 @@ namespace AppIntegConexionApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ConexionesController : ControllerBase
+    public class EmpresasController : ControllerBase
     {
-        private readonly IConexionesRepository _conexionesRepository;
+        private readonly IEmpresasRepository _conexionesRepository;
 
-        public ConexionesController(IConexionesRepository conexionesRepository)
+        public EmpresasController(IEmpresasRepository conexionesRepository)
         {
             _conexionesRepository = conexionesRepository;
         }

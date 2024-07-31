@@ -16,7 +16,7 @@ namespace AppIntegConexionApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IControlSesionRepository,ControlSesionRepository>();
-            services.AddScoped<IConexionesRepository, ConexionesRepository>();
+            services.AddScoped<IEmpresasRepository, EmpresasRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IMenusRepository, MenusRepository>();
             services.AddScoped<IRolesRepository, RolesRepository>();

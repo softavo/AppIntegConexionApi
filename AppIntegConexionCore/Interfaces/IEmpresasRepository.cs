@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AppIntegConexionCore.Interfaces
 {
-    public interface IConexionesRepository
+    public interface IEmpresasRepository
     {
         List<Conexion> ConsultarConexionPorUsuario(string usuario);
         Conexion ConsultarConexionPorUsuarioEmpresa(string usuario, int conexion);
