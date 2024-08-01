@@ -15,7 +15,7 @@ namespace AppIntegConexionApi.Controllers
         }
 
         [HttpGet("MenusRolesConsultar")]
-        public IEnumerable<MenuRol> MenusRolesConsultar()
+        public IEnumerable<MenuRolView> MenusRolesConsultar()
         {
             var menuRoles = _menusRolesRepository.Consultar();
             return menuRoles;
@@ -28,8 +28,15 @@ namespace AppIntegConexionApi.Controllers
             return menuRol;
         }
 
+        [HttpGet("MenusRolesConsultarViewPorId/{idMenuRol}")]
+        public MenuRolView MenusRolesConsultarViewPorId(int idMenuRol)
+        {
+            var menuRol = _menusRolesRepository.ConsultarViewPorId(idMenuRol);
+            return menuRol;
+        }
+
         [HttpGet("MenusRolesConsultarRol/{idRol}")]
-        public IEnumerable<MenuRol> MenusRolesConsultarRol(int idRol)
+        public IEnumerable<MenuRolView> MenusRolesConsultarRol(int idRol)
         {
             var menuRoles = _menusRolesRepository.ConsultarMenusRol(idRol);
             return menuRoles;

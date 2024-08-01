@@ -23,18 +23,18 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
-        public IList<UsuarioRol> Consultar()
+        public IList<UsuarioRolView> Consultar()
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolesQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<UsuarioRol> listaUsuariosRol = new List<UsuarioRol>();
-            UsuarioRol usuariosRol = null;
+            List<UsuarioRolView> listaUsuariosRol = new List<UsuarioRolView>();
+            UsuarioRolView usuariosRol = null;
 
             while (dataReader.Read())
             {
-                usuariosRol = new UsuarioRol();
+                usuariosRol = new UsuarioRolView();
 
                 usuariosRol.IdUsuarioRol = dataReader.ToInt("IdUsuarioRol");
                 usuariosRol.IdUsuario = dataReader.ToInt("IdUsuario");
@@ -63,25 +63,25 @@ namespace AppIntegConexionCore.Repository
                 usuariosRol.IdUsuarioRol = dataReader.ToInt("IdUsuarioRol");
                 usuariosRol.IdUsuario = dataReader.ToInt("IdUsuario");
                 usuariosRol.IdRol = dataReader.ToInt("IdRol");
-                usuariosRol.Usuario = dataReader.ToString("Usuario");
-                usuariosRol.Rol = dataReader.ToString("Rol");
+                //usuariosRol.Usuario = dataReader.ToString("Usuario");
+                //usuariosRol.Rol = dataReader.ToString("Rol");
             }
             return usuariosRol;
         }
 
-        public IList<UsuarioRol> ConsultarPorIdUsuario(int? id)
+        public IList<UsuarioRolView> ConsultarPorIdUsuario(int? id)
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolesPorIdUsuarioQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdUsuario", id);
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<UsuarioRol> listaUsuariosRol = new List<UsuarioRol>();
-            UsuarioRol usuariosRol = null;
+            List<UsuarioRolView> listaUsuariosRol = new List<UsuarioRolView>();
+            UsuarioRolView usuariosRol = null;
 
             while (dataReader.Read())
             {
-                usuariosRol = new UsuarioRol();
+                usuariosRol = new UsuarioRolView();
 
                 usuariosRol.IdUsuarioRol = dataReader.ToInt("IdUsuarioRol");
                 usuariosRol.IdUsuario = dataReader.ToInt("IdUsuario");
@@ -95,19 +95,19 @@ namespace AppIntegConexionCore.Repository
             return listaUsuariosRol;
         }
 
-        public IList<UsuarioRol> Buscar(int idRol)
+        public IList<UsuarioRolView> Buscar(int idRol)
         {
             SqlCommand cmd = new SqlCommand("UsuariosRolBuscarQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdRol", idRol);
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<UsuarioRol> listaUsuariosRol = new List<UsuarioRol>();
-            UsuarioRol usuariosRol = null;
+            List<UsuarioRolView> listaUsuariosRol = new List<UsuarioRolView>();
+            UsuarioRolView usuariosRol = null;
 
             while (dataReader.Read())
             {
-                usuariosRol = new UsuarioRol();
+                usuariosRol = new UsuarioRolView();
 
                 usuariosRol.IdUsuario = dataReader.ToInt("IdUsuario");
                 usuariosRol.Nombre = dataReader.ToString("Nombre");

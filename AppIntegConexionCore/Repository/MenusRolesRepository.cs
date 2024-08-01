@@ -23,18 +23,18 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
-        public List<MenuRol> Consultar()
+        public List<MenuRolView> Consultar()
         {
             SqlCommand cmd = new SqlCommand("MenusRolesQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<MenuRol> listaMenusRol = new List<MenuRol>();
-            MenuRol menusRol = null;
+            List<MenuRolView> listaMenusRol = new List<MenuRolView>();
+            MenuRolView menusRol = null;
 
             while (dataReader.Read())
             {
-                menusRol = new MenuRol();
+                menusRol = new MenuRolView();
 
                 menusRol.IdMenuRol = dataReader.ToInt("IdMenuRol");
                 menusRol.IdRol = dataReader.ToInt("IdRol");
@@ -60,6 +60,30 @@ namespace AppIntegConexionCore.Repository
             if (dataReader.Read())
             {
                 menusRol = new MenuRol();
+
+                menusRol.IdMenuRol = dataReader.ToInt("IdMenuRol");
+                menusRol.IdRol = dataReader.ToInt("IdRol");
+                menusRol.IdMenuPadre = dataReader.ToInt("IdMenuPadre");
+                menusRol.IdMenuHijo = dataReader.ToInt("IdMenuHijo");
+                //menusRol.MenuPadre = dataReader.ToString("MenuPadre");
+                //menusRol.MenuHijo = dataReader.ToString("MenuHijo");
+                //menusRol.Rol = dataReader.ToString("Rol");
+            }
+            return menusRol;
+        }
+
+        public MenuRolView ConsultarViewPorId(int id)
+        {
+            SqlCommand cmd = new SqlCommand("MenusRolesPorIdQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdMenuRol", id);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            MenuRolView menusRol = null;
+
+            if (dataReader.Read())
+            {
+                menusRol = new MenuRolView();
 
                 menusRol.IdMenuRol = dataReader.ToInt("IdMenuRol");
                 menusRol.IdRol = dataReader.ToInt("IdRol");
@@ -100,19 +124,19 @@ namespace AppIntegConexionCore.Repository
             cmd.ExecuteNonQuery();
         }
 
-        public List<MenuRol> ConsultarMenusRol(int idRol)
+        public List<MenuRolView> ConsultarMenusRol(int idRol)
         {
             SqlCommand cmd = new SqlCommand("MenuRolesIdRolQry", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdRol", idRol);
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            List<MenuRol> listaMenusRol = new List<MenuRol>();
-            MenuRol menusRol = null;
+            List<MenuRolView> listaMenusRol = new List<MenuRolView>();
+            MenuRolView menusRol = null;
 
             while (dataReader.Read())
             {
-                menusRol = new MenuRol();
+                menusRol = new MenuRolView();
 
                 menusRol.IdRol = dataReader.ToInt("IdRol");
                 menusRol.IdMenuHijo = dataReader.ToInt("IdMenu");
@@ -122,6 +146,7 @@ namespace AppIntegConexionCore.Repository
             }
             return listaMenusRol;
         }
+
 
         public void Dispose()
         {

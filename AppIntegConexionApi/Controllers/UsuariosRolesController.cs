@@ -16,7 +16,7 @@ namespace AppIntegConexionApi.Controllers
         }
 
         [HttpGet("UsuariosRolesConsultarPorIdUsuario/{idUsuario}")]
-        public IEnumerable<UsuarioRol> UsuariosRolesConsultarPorIdUsuario(int idUsuario)
+        public IEnumerable<UsuarioRolView> UsuariosRolesConsultarPorIdUsuario(int idUsuario)
         {
             var usuariosRoles = _usuariosRolesRepository.ConsultarPorIdUsuario(idUsuario);
             return usuariosRoles;
@@ -30,14 +30,14 @@ namespace AppIntegConexionApi.Controllers
         }
 
         [HttpGet("UsuariosRolesConsultar")]
-        public IEnumerable<UsuarioRol> UsuariosRolesConsultar()
+        public IEnumerable<UsuarioRolView> UsuariosRolesConsultar()
         {
             var usuariosRoles = _usuariosRolesRepository.Consultar();
             return usuariosRoles;
         }
 
         [HttpGet("UsuariosRolesBuscar/{idUsuarioRol}")]
-        public IEnumerable<UsuarioRol> UsuariosRolesBuscar(int idUsuarioRol)
+        public IEnumerable<UsuarioRolView> UsuariosRolesBuscar(int idUsuarioRol)
         {
             var usuariosRoles = _usuariosRolesRepository.Buscar(idUsuarioRol);
             return usuariosRoles;
