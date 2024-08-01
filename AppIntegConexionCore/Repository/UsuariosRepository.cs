@@ -23,6 +23,31 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
+        public IList<Usuario> Consultar(int idUsuario, int idConexion)
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosPorIdConexionQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+            cmd.Parameters.AddWithValue("@IdConexion", idConexion);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            IList<Usuario> listaUsuarios = new List<Usuario>();
+            Usuario usuario = null;
+
+            while (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.IdUsuario = dataReader.ToInt("IdUsuario");
+                usuario.Codigo = dataReader.ToString("Codigo");
+                usuario.Clave = dataReader.ToString("Clave");
+                usuario.Nombre = dataReader.ToString("Nombre");
+                usuario.Cargo = dataReader.ToString("Cargo");
+                usuario.IdVendedor = dataReader.ToInt("IdVendedor");
+                listaUsuarios.Add(usuario);
+            }
+            return listaUsuarios;
+        }
+
         public Usuario ConsultarUsuarioPorUsuarioClave(Usuario usuarioApi)
         {
             SqlCommand cmd = new SqlCommand("UsuariosPorUsuarioClaveQry", conexionDb);
@@ -50,7 +75,7 @@ namespace AppIntegConexionCore.Repository
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
             cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
-            cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
+            //cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
             cmd.ExecuteNonQuery();
         }
 
@@ -60,7 +85,7 @@ namespace AppIntegConexionCore.Repository
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
             cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
-            cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
+            //cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
             cmd.ExecuteNonQuery();
         }
 
@@ -93,5 +118,6 @@ namespace AppIntegConexionCore.Repository
                 conexionDb.Close();
             }
         }
+
     }
 }

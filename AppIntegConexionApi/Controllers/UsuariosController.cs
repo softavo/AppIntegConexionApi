@@ -14,6 +14,13 @@ namespace AppIntegConexionApi.Controllers
             _usuariosRepository = usuariosRepository;
         }
 
+        [HttpGet("UsuarioConsultarConexion/{idUsuario}/{idConexion}")]
+        public IEnumerable<Usuario> UsuarioConsultarConexion(int idUsuario, int idConexion)
+        {
+            var usuarios = _usuariosRepository.Consultar(idUsuario, idConexion);
+            return usuarios;
+        }
+
         // GET: api/<UsuariosController>
         [HttpPost("UsuarioClave")]
         public Usuario UsuarioClave([FromBody] Usuario usuario)
