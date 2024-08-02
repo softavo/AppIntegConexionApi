@@ -69,24 +69,36 @@ namespace AppIntegConexionCore.Repository
             return usuario;
         }
 
-        public void CrearUsuario(Usuario usuario)
+        public int CrearUsuario(Usuario usuario)
         {
             SqlCommand cmd = new SqlCommand("UsuariosIns", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
-            cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
-            //cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
-            cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
+            cmd.Parameters.AddWithValue("@Codigo", usuario.Codigo);
+            cmd.Parameters.AddWithValue("@Clave", usuario.Clave.ToUpper());
+            cmd.Parameters.AddWithValue("@Cargo", usuario.Cargo);
+            cmd.Parameters.AddWithValue("@IdVendedor", usuario.IdVendedor);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            int id = 0;
+
+            if (dataReader.Read())
+            {
+                id = dataReader.ToInt("InsertedIDUSuario");
+            }
+            return id;
         }
 
         public void ActualizarUsuario(Usuario usuario)
         {
             SqlCommand cmd = new SqlCommand("UsuariosUpd", conexionDb);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Usuario", usuario.Codigo);
-            cmd.Parameters.AddWithValue("@Clave", usuario.Clave);
-            //cmd.Parameters.AddWithValue("@IdConexion", usuario.IdConexion);
-            cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
+            cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
+            cmd.Parameters.AddWithValue("@Codigo", usuario.Codigo);
+            cmd.Parameters.AddWithValue("@Clave", usuario.Clave.ToUpper());
+            cmd.Parameters.AddWithValue("@Cargo", usuario.Cargo);
+            cmd.Parameters.AddWithValue("@IdVendedor", usuario.IdVendedor);
+            cmd.ExecuteNonQueryAsync();
         }
 
         public void EliminarUsuario(string usuario)
@@ -97,14 +109,14 @@ namespace AppIntegConexionCore.Repository
             cmd.ExecuteNonQuery();
         }
 
-        public void EliminarUsuarioEmpresa(string codigo, int idConexion)
-        {
-            SqlCommand cmd = new SqlCommand("UsuariosConexionDel", conexionDb);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Usuario", codigo);
-            cmd.Parameters.AddWithValue("@IdConexion", idConexion);
-            cmd.ExecuteNonQuery();
-        }
+        //public void EliminarUsuarioEmpresa(string codigo, int idConexion)
+        //{
+        //    SqlCommand cmd = new SqlCommand("UsuariosConexionDel", conexionDb);
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    cmd.Parameters.AddWithValue("@Usuario", codigo);
+        //    cmd.Parameters.AddWithValue("@IdConexion", idConexion);
+        //    cmd.ExecuteNonQuery();
+        //}
 
         public void Dispose()
         {
@@ -119,5 +131,106 @@ namespace AppIntegConexionCore.Repository
             }
         }
 
+        public IList<Usuario> ConsultarIdUsuario(int idUsuario)
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosIdUsuarioQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            IList<Usuario> listaUsuarios = new List<Usuario>();
+            Usuario usuario = null;
+
+            while (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.IdUsuario = dataReader.ToInt("IdUsuario");
+                usuario.Codigo = dataReader.ToString("Codigo");
+                usuario.Clave = dataReader.ToString("Clave");
+                usuario.Nombre = dataReader.ToString("Nombre");
+                usuario.Cargo = dataReader.ToString("Cargo");
+                usuario.IdVendedor = dataReader.ToInt("IdVendedor");
+                listaUsuarios.Add(usuario);
+            }
+            return listaUsuarios;
+        }
+
+        public IList<Usuario> Buscar()
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosBuscarQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            IList<Usuario> listaUsuarios = new List<Usuario>();
+            Usuario usuario = null;
+
+            while (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.IdUsuario = dataReader.ToInt("IdUsuario");
+                usuario.Nombre = dataReader.ToString("Nombre");
+                listaUsuarios.Add(usuario);
+            }
+            return listaUsuarios;
+        }
+
+        public Usuario ConsultarPorId(int? id)
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosPorIdQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdUsuario", id);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            Usuario usuario = null;
+
+            if (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.IdUsuario = dataReader.ToInt("IdUsuario");
+                usuario.Codigo = dataReader.ToString("Codigo");
+                usuario.Clave = dataReader.ToString("Clave");
+                usuario.Nombre = dataReader.ToString("Nombre");
+                usuario.Cargo = dataReader.ToString("Cargo");
+                usuario.IdVendedor = dataReader.ToInt("IdVendedor");
+            }
+            return usuario;
+        }
+
+        public Usuario ConsultarPorCodigo(string codigo)
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosPorCodigoQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Codigo", codigo);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            Usuario usuario = null;
+
+            if (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.IdUsuario = dataReader.ToInt("IdUsuario");
+                usuario.Codigo = dataReader.ToString("Codigo");
+                usuario.Clave = dataReader.ToString("Clave");
+                usuario.Nombre = dataReader.ToString("Nombre");
+                usuario.Cargo = dataReader.ToString("Cargo");
+                usuario.IdVendedor = dataReader.ToInt("IdVendedor");
+            }
+            return usuario;
+        }
+
+        public Usuario ConsultarAprobacion(string codigo, string clave)
+        {
+            SqlCommand cmd = new SqlCommand("UsuariosAprobarQry", conexionDb);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Usuario", codigo);
+            cmd.Parameters.AddWithValue("@Clave", clave);
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            Usuario usuario = null;
+
+            if (dataReader.Read())
+            {
+                usuario = new Usuario();
+                usuario.Codigo = dataReader.ToString("Codigo");
+                usuario.Nombre = dataReader.ToString("Nombre");
+            }
+            return usuario;
+        }
     }
 }

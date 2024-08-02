@@ -14,6 +14,7 @@ namespace AppIntegConexionApi.Controllers
             _usuariosRepository = usuariosRepository;
         }
 
+
         [HttpGet("UsuarioConsultarConexion/{idUsuario}/{idConexion}")]
         public IEnumerable<Usuario> UsuarioConsultarConexion(int idUsuario, int idConexion)
         {
@@ -22,8 +23,8 @@ namespace AppIntegConexionApi.Controllers
         }
 
         // GET: api/<UsuariosController>
-        [HttpPost("UsuarioClave")]
-        public Usuario UsuarioClave([FromBody] Usuario usuario)
+        [HttpPost("UsuarioConsultarClave")]
+        public Usuario UsuarioConsultarClave([FromBody] Usuario usuario)
         {
             var usuarioEmpresa = _usuariosRepository.ConsultarUsuarioPorUsuarioClave(usuario);
             return usuarioEmpresa;
@@ -45,13 +46,13 @@ namespace AppIntegConexionApi.Controllers
             return Ok();
         }
 
-        // DELETE api/<UsuariosController>/5
-        [HttpDelete("UsuarioEliminarEmpresa/{usuario}/{conexion}")]
-        public IActionResult UsuarioEliminarEmpresa(string usuario, int conexion)
-        {
-            _usuariosRepository.EliminarUsuarioEmpresa(usuario, conexion);
-            return Ok();
-        }
+        //// DELETE api/<UsuariosController>/5
+        //[HttpDelete("UsuarioEliminarEmpresa/{usuario}/{conexion}")]
+        //public IActionResult UsuarioEliminarEmpresa(string usuario, int conexion)
+        //{
+        //    _usuariosRepository.EliminarUsuarioEmpresa(usuario, conexion);
+        //    return Ok();
+        //}
 
         // DELETE api/<UsuariosController>/5
         [HttpDelete("UsuarioEliminar/{usuario}")]
@@ -59,6 +60,41 @@ namespace AppIntegConexionApi.Controllers
         {
             _usuariosRepository.EliminarUsuario(usuario);
             return Ok();
+        }
+
+        [HttpGet("UsuarioConsultarIdUsuario/{idUsuario}")]
+        public IEnumerable<Usuario> UsuarioConsultarIdUsuario(int idUsuario)
+        {
+            var usuarios = _usuariosRepository.ConsultarIdUsuario(idUsuario);
+            return usuarios;
+        }
+
+        [HttpGet("UsuarioBuscar")]
+        public IEnumerable<Usuario> UsuarioBuscar()
+        {
+            var usuarios = _usuariosRepository.Buscar();
+            return usuarios;
+        }
+
+        [HttpGet("UsuarioConsultarId/{id}")]
+        public Usuario UsuarioConsultarId(int Id)
+        {
+            var usuario = _usuariosRepository.ConsultarPorId(Id);
+            return usuario;
+        }
+
+        [HttpGet("UsuarioConsultarCodigo/{codigo}")]
+        public Usuario UsuarioConsultarCodigo(string codigo)
+        {
+            var usuario = _usuariosRepository.ConsultarPorCodigo(codigo);
+            return usuario;
+        }
+
+        [HttpGet("UsuarioConsultarAprobacion/{codigo}/{clave}")]
+        public Usuario UsuarioConsultarAprobacion(string codigo, string clave)
+        {
+            var usuario = _usuariosRepository.ConsultarAprobacion(codigo, clave);
+            return usuario;
         }
     }
 }
